@@ -7,6 +7,7 @@ export default function IndexPage() {
     <div>
       <Layous>
         <div className={styles.liveList}>
+          <h1>推荐</h1>
          <GameLiveItem/>
         </div>
       </Layous>

@@ -2,9 +2,19 @@
 import styles from './index.less'
 import zuqiu from '@/static/zuqiu.png'
 import zuqiu1 from '@/static/zuqiu1.png'
+import lanqiu from '@/static/lanqiu.png'
+import lanqiu1 from '@/static/lanqiu1.png'
+import remen from '@/static/remen.png'
+import remen1 from '@/static/remen1.png'
 const Layouts = (props)=>{
 
     const navList =[
+        {
+            name:'推荐',
+            icon:remen,
+            iconCur:remen1,
+            link:'/'
+        },
         {
             name:'足球',
             icon:zuqiu,
@@ -12,8 +22,8 @@ const Layouts = (props)=>{
             link:'/'
         }, {
             name:'篮球',
-            icon:zuqiu,
-            iconCur:zuqiu1,
+            icon:lanqiu,
+            iconCur:lanqiu1,
             link:'/'
         },
     ]
