@@ -3,8 +3,9 @@ import GameLiveItem from '@/components/gameLive/GameLiveItem'
 import Layous from '@/components/layout/index'
 import { useState,useEffect } from 'react';
 import {getMatchLive} from '@/api/index'
-import { Empty } from 'antd';
-
+import { Empty,Spin } from 'antd';
+import { LoadingOutlined } from '@ant-design/icons';
+const antIcon = <LoadingOutlined style={{ fontSize: 38,color:'#FA6981' }} spin />;
 const IndexPage = ()=> {
   const [liveList,setLiveList] = useState([])
   const [navTab,setNavTab] = useState(1)
@@ -40,9 +41,11 @@ const IndexPage = ()=> {
       <Layous curTab={navTab} tabFn={navTabFn}>
         <div className={styles.liveList}>
           <h1>{_type[navTab]}</h1>
+          <Spin spinning={loding} indicator={antIcon} >
           {
-              !loding && liveList.length>0?<GameLiveItem liveList={liveList}/>:<Empty/>
+              liveList.length>0?<GameLiveItem liveList={liveList}/>:<Empty/>
           }
+          </Spin>
         </div>
       </Layous>
     </div>

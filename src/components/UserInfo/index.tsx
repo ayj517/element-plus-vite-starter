@@ -15,6 +15,10 @@ const UserInfo: FC = () => {
     setIsModalVisible(true);
   };
 
+  const appdow = ()=>{
+    message.info('正在开发中...');
+  }
+
   const handleOk = () => {
     setIsModalVisible(false);
   };
@@ -24,6 +28,9 @@ const UserInfo: FC = () => {
   };
 
   return <div className={styles.userInfoContainer}>
+     <span className={styles.appDow} onClick={appdow} >
+      下载APP
+    </span>
     <span className={styles.login} onClick={showModal} >
       登录/注册
     </span>
