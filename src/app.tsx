@@ -3,6 +3,8 @@ import { PageLoading } from '@ant-design/pro-layout';
 import type { RunTimeLayoutConfig } from 'umi';
 import UserInfo from '@/components/UserInfo'
 import { history } from 'umi';
+import logo from '@/static/logo.jpg'
+
 /** 获取用户信息比较慢的时候会展示一个 loading */
 export const initialStateConfig = {
   loading: <PageLoading />,
@@ -29,7 +31,7 @@ export const layout: RunTimeLayoutConfig = ({ initialState }) => {
 
   return {
     // headerContentRender: () => <HeaderContainer />,
-    rightContentRender: () => <UserInfo/>,
+    rightContentRender: () => <UserInfo />,
     disableContentMargin: false,
     // footerRender: () => <Footer />,
     onPageChange: () => {
@@ -41,7 +43,7 @@ export const layout: RunTimeLayoutConfig = ({ initialState }) => {
       //   history.push(`/project/${currentProject?.appKey}/scene`);
     },
     headerRender: <div>adsfasdfasdf</div>,
-    logo: () => null,
+    logo: logo,
     ...initialState?.settings,
   };
 };

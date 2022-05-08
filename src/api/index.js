@@ -9,26 +9,26 @@ const URL = 'https://api.11zb.com/api'
 export async function  getMatchLive(data){
     console.log(data)
 	return  request.get(`${URL}/match/getHomeList`,{params: data})
-} 
+}
 
 
 
 // 登陆 mobile=111&captcha=1
 // export const getLogin = (data) =>{
 // 	return  http.get(`/member/login`,{params: data,custom})
-// } 
+// }
 
 export async function getLogin  (data){
-	return  request.get(`/member/login`,{params: data})
-} 
+	return  request.get(`${URL}/member/login`,{params: data})
+}
 
-//获取获取验证码 mobile=11111 
+//获取获取验证码 mobile=11111
 export async function  sedSmscode (data){
-	return request.get(`/smscode`,{params: data})
-} 
+	return request.get(`${URL}/smscode`,{params: data})
+}
 
 
-//获取队伍比赛详情match_id, sport_id, ff_match_id
+//获取队伍比赛详情 match_id, sport_id, ff_match_id
 export  async function  getMatchInfo (data){
-	return  http.get(`/match/getMatchInfo`,{params: data,custom})
-} 
+	return  request.get(`${URL}/match/getMatchInfo`,{params: data})
+}
