@@ -12,20 +12,20 @@ const Layouts = (props)=>{
             name:'推荐',
             icon:remen,
             iconCur:remen1,
-            id:0,
+            id:1,
             link:'/'
         },
         {
             name:'足球',
             icon:zuqiu,
             iconCur:zuqiu1,
-            id:1,
+            id:2,
             link:'/'
         }, {
             name:'篮球',
             icon:lanqiu,
             iconCur:lanqiu1,
-            id:2,
+            id:3,
             link:'/'
         },
     ]

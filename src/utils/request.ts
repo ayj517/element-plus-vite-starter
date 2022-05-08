@@ -97,7 +97,7 @@ function aes_decrypt(ciphertext:any) {
 //  });
 
  request.interceptors.response.use(async response => {
-  const _data = JSON.parse(aes_decrypt(await response.text()))
+  const _data = JSON.parse(aes_decrypt(await response.text()));
   console.log(_data,'_data')
   return _data;
  });
