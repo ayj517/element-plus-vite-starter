@@ -1,11 +1,15 @@
 import styles from './index.less';
-import GameLiveItem from '@/component/gameLive/GameLiveItem'
+import GameLiveItem from '@/components/gameLive/GameLiveItem'
+import Layous from '@/components/layout/index'
 
 export default function IndexPage() {
   return (
     <div>
-      <h1 className={styles.title}>Page index</h1>
-      <GameLiveItem/>
+      <Layous>
+        <div className={styles.liveList}>
+         <GameLiveItem/>
+        </div>
+      </Layous>
     </div>
   );
 }
