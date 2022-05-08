@@ -26,6 +26,10 @@ export default defineConfig({
       path: '/activity',
       component: '@/pages/index',
     },
+    {
+      path: '/live',
+      component: '@/pages/Live',
+    },
   ],
   fastRefresh: {},
 });
