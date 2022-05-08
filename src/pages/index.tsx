@@ -1,54 +1,60 @@
 import styles from './index.less';
 import GameLiveItem from '@/components/gameLive/GameLiveItem'
-import Layous from '@/components/layout/index'
-import { useState,useEffect } from 'react';
-import {getMatchLive} from '@/api/index'
-import { Empty,Spin } from 'antd';
-import { LoadingOutlined } from '@ant-design/icons';
-const antIcon = <LoadingOutlined style={{ fontSize: 38,color:'#FA6981' }} spin />;
-const IndexPage = ()=> {
-  const [liveList,setLiveList] = useState([])
-  const [navTab,setNavTab] = useState(1)
-  const [loding,setLoding] = useState(false)
+import Layout from '@/components/layout/index'
+import { useState, useEffect } from 'react';
+import { getMatchLive } from '@/api/index'
+import { Empty, Spin } from 'antd';
+import { useLocation } from 'umi';
+
+export type queryType = {
+  typeId?: string;
+};
+
+const IndexPage = () => {
+  const [liveList, setLiveList] = useState([])
+  const [navTab, setNavTab] = useState(1)
+  const [loding, setLoding] = useState(false)
+
+  const location = useLocation() as unknown as { query: queryType };
+  const query = location.query;
+  const typeId = query.typeId || 1
 
   useEffect(() => {
-    getList(navTab)
-  },[]);
+    getList(typeId)
+  }, [typeId]);
 
-  const _type ={
-    1:'推荐',
-    2:'足球',
-    3:'篮球',
+  const _type: any = {
+    1: '推荐',
+    2: '足球',
+    3: '篮球',
   }
 
-  const navTabFn =(nub:any)=>{
-    setNavTab(nub)
-    getList(nub)
-  }
+  // const navTabFn = (nub: any) => {
+  //   setNavTab(nub)
+  //   getList(nub)
+  // }
 
-  const getList = async(id:any)=>{
+  const getList = async (id: any) => {
     setLoding(true)
     // setLiveList([])
     const liveData = {
-      menu_id:id
+      menu_id: id
     }
-    const res  = await getMatchLive(liveData);
+    const res = await getMatchLive(liveData);
     setLoding(false)
     setLiveList(res.data.matchLives)
   }
   return (
     <div>
-      <Layous curTab={navTab} tabFn={navTabFn}>
+      <Layout>
         <div className={styles.liveList}>
-          <h1>{_type[navTab]}</h1>
-          <Spin spinning={loding} indicator={antIcon} >
+          <h1>{_type[typeId]}</h1>
           {
-              liveList.length>0?<GameLiveItem liveList={liveList}/>:<Empty/>
+            !loding && liveList.length > 0 ? <GameLiveItem liveList={liveList} /> : <Empty />
           }
-          </Spin>
         </div>
-      </Layous>
-    </div>
+      </Layout >
+    </div >
   );
 }
 
