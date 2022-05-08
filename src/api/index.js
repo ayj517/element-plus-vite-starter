@@ -11,3 +11,18 @@ export async function  getMatchLive(data){
 	return  request.get(`${URL}/match/getHomeList`,{params: data})
 } 
 
+
+
+// 登陆 mobile=111&captcha=1
+// export const getLogin = (data) =>{
+// 	return  http.get(`/member/login`,{params: data,custom})
+// } 
+
+export async function getLogin  (data){
+	return  request.get(`/member/login`,{params: data})
+} 
+
+//获取获取验证码 mobile=11111 
+export async function  sedSmscode (data){
+	return request.get(`/smscode`,{params: data})
+} 
