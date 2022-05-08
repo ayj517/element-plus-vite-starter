@@ -3,10 +3,12 @@ import GameLiveItem from '@/components/gameLive/GameLiveItem'
 import Layous from '@/components/layout/index'
 import { useState,useEffect } from 'react';
 import {getMatchLive} from '@/api/index'
+import { Empty } from 'antd';
 
 const IndexPage = ()=> {
   const [liveList,setLiveList] = useState([])
   const [navTab,setNavTab] = useState(1)
+  const [loding,setLoding] = useState(false)
 
   useEffect(() => {
     getList(navTab)
@@ -24,11 +26,13 @@ const IndexPage = ()=> {
   }
 
   const getList = async(id:any)=>{
+    setLoding(true)
+    // setLiveList([])
     const liveData = {
       menu_id:id
     }
     const res  = await getMatchLive(liveData);
-    console.log(res.data.matchLives,'res.data.matchLives')
+    setLoding(false)
     setLiveList(res.data.matchLives)
   }
   return (
@@ -36,7 +40,9 @@ const IndexPage = ()=> {
       <Layous curTab={navTab} tabFn={navTabFn}>
         <div className={styles.liveList}>
           <h1>{_type[navTab]}</h1>
-         <GameLiveItem liveList={liveList}/>
+          {
+              !loding && liveList.length>0?<GameLiveItem liveList={liveList}/>:<Empty/>
+          }
         </div>
       </Layous>
     </div>
