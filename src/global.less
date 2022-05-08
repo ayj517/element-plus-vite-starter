@@ -1,0 +1,33 @@
+body{
+  background: red !important;
+}
+#root{
+  .ant-layout-header,
+  .ant-pro-fixed-header{
+    box-shadow: 0 4px 4px rgba(51, 51, 51, 0.299);
+    .ant-pro-top-nav-header{
+      box-shadow: none!important;
+    }
+    background-color: #fff;
+    padding-top:20px!important;
+    height: 74px!important;
+
+    .ant-pro-menu-item{
+      display: block;
+      padding: 0 16px;
+      color: #333;
+      line-height: 34px;
+      font-size: 20px;
+    }
+
+    .ant-menu-item-active,
+    .ant-menu-item-selected{
+      background: transparent;
+      .ant-pro-menu-item{
+        color: #7e4f20;
+        background: linear-gradient(90deg,#fce4bb,#f1cb91);
+        border-radius: 8px 2px 8px 8px;
+      }
+    }
+  }
+}
