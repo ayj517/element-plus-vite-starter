@@ -28,7 +28,7 @@ export async function  sedSmscode (data){
 } 
 
 
-//获取队伍比赛详情 match_id=3570833&sport_id=1
+//获取队伍比赛详情match_id, sport_id, ff_match_id
 export  async function  getMatchInfo (data){
 	return  http.get(`/match/getMatchInfo`,{params: data,custom})
 } 
