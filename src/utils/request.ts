@@ -4,7 +4,24 @@
  */
  import { extend } from 'umi-request';
  import { notification, message } from 'antd';
+ import CryptoJS from './crypto-js.js';
 //  import * as Cookies from 'js-cookie';
+
+const AES_KEY = "qq3217834abcdefg"; //16位
+const AES_IV = "1234567890123456"; //16位
+// function aes_encrypt(plainText) {
+// 	var encrypted = CryptoJS.AES.encrypt(plainText, CryptoJS.enc.Utf8.parse(AES_KEY), {
+// 		iv: CryptoJS.enc.Utf8.parse(AES_IV)
+// 	});
+// 	return CryptoJS.enc.Base64.stringify(encrypted.ciphertext);
+// }
+
+function aes_decrypt(ciphertext:any) {
+	var decrypted = CryptoJS.AES.decrypt(ciphertext, CryptoJS.enc.Utf8.parse(AES_KEY), {
+		iv: CryptoJS.enc.Utf8.parse(AES_IV)
+	});
+	return decrypted.toString(CryptoJS.enc.Utf8);
+}
 
  const codeMessage = {
    200: '服务器成功返回请求的数据。',
@@ -29,6 +46,7 @@
   */
  const errorHandler = (error: { response: Response }): Response => {
    const { response } = error;
+   console.log(response,'response')
    if (response && response.status) {
      const errorText = codeMessage[response.status] || response.statusText;
      const { status, url } = response;
@@ -58,9 +76,9 @@
   */
 
  const request = extend({
-   prefix: '/v1/api/',
+  //  prefix: '/v1/api/',
    errorHandler, // 默认错误处理
-   credentials: 'include', // 默认请求是否带上cookie
+  //  credentials: 'include', // 默认请求是否带上cookie
  });
 
 //  request.interceptors.request.use((url, options) => {
@@ -78,16 +96,10 @@
 //    );
 //  });
 
-
  request.interceptors.response.use(async response => {
-   try {
-     const data = await response.clone().json();
-     // console.info('data', data)
-   } catch (e) {
-     console.error(`ERROR: 请求 ${response.url} 失败`);
-   }
-
-   return response;
+  const _data = JSON.parse(aes_decrypt(await response.text()))
+  console.log(_data,'_data')
+  return _data;
  });
 
  export default request;
