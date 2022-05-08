@@ -4,6 +4,7 @@ import LiveBar from '@/components/LiveBar';
 import VideoJS from '@/components/VideoJs'
 import styles from './index.less'
 import RaceInfoTabs from '@/components/RaceInfoTabs';
+import Layout from '@/components/layout'
 
 const { TabPane } = Tabs;
 const Live: FC = () => {
@@ -35,13 +36,15 @@ const Live: FC = () => {
   };
 
 
-  return <div className={styles.liveContainer}>
-    <LiveBar />
-    <div className={styles.videoContainer}>
-      <VideoJS options={videoJsOptions} onReady={handlePlayerReady} />
+  return <Layout>
+    <div className={styles.liveContainer}>
+      <LiveBar />
+      <div className={styles.videoContainer}>
+        <VideoJS options={videoJsOptions} onReady={handlePlayerReady} />
+      </div>
+      <RaceInfoTabs />
     </div>
-    <RaceInfoTabs/>
-  </div>
+  </Layout>
 }
 
 export default Live
