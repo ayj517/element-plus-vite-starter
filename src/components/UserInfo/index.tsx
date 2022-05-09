@@ -1,4 +1,4 @@
-import { FC, useState, useRef } from 'react'
+import { FC, useState, useRef, useEffect } from 'react'
 import styles from './index.less'
 import * as Cookies from 'js-cookie';
 import { Modal, Button, Form, message } from 'antd';
@@ -8,12 +8,26 @@ import { MobileOutlined, LockOutlined, } from '@ant-design/icons';
 import { sendSmsCode, getLogin } from '@/api'
 
 const UserInfo: FC = () => {
-  const [isModalVisible, setIsModalVisible] = useState(false);
-
   const curUser = Cookies.get('tel')
-  const [loginText, setLoginText] = useState(`${curUser} | 退出` || '登录/注册')
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [loginText, setLoginText] = useState(curUser ? `${curUser} | 退出` : '登录/注册')
   const [isLogin, setIsLogin] = useState(!!curUser)
   const formRef = useRef<any>(null);
+  const loginAlert = useRef<any>(null)
+
+  const checkLogin = () => {
+    loginAlert.current && clearInterval(loginAlert.current)
+    loginAlert.current = setInterval(() => {
+      const showLogin = localStorage.getItem('showLogin')
+      if (showLogin) {
+        localStorage.removeItem('showLogin')
+        setIsModalVisible(true)
+        clearInterval(loginAlert.current)
+      }
+    }, 1000)
+  }
+
+  checkLogin()
 
   const showModal = () => {
     if (!isLogin) {
