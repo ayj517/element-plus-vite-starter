@@ -20,12 +20,12 @@ export default defineConfig({
     {
       name: '赛程',
       path: '/game',
-      component: '@/pages/index',
+      component: '@/pages/saicheng',
     },
     {
       name: '活动',
       path: '/activity',
-      component: '@/pages/index',
+      component: '@/pages/activities',
     },
     {
       path: '/live',
