@@ -1,21 +1,46 @@
-import { FC, useState } from 'react'
+import { FC, useState, useRef, useEffect } from 'react'
 import styles from './index.less'
-
+import * as Cookies from 'js-cookie';
 import { Modal, Button, Form, message } from 'antd';
 
-import { LoginForm, ProFormText, ProFormCaptcha } from '@ant-design/pro-form';
+import { LoginForm, ProFormText, ProFormCaptcha, ProFormInstance } from '@ant-design/pro-form';
 import { MobileOutlined, LockOutlined, } from '@ant-design/icons';
-import type { CSSProperties } from 'react';
-
+import { sendSmsCode, getLogin } from '@/api'
 
 const UserInfo: FC = () => {
+  const curUser = Cookies.get('tel')
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [loginText, setLoginText] = useState(curUser ? `${curUser} | 退出` : '登录/注册')
+  const [isLogin, setIsLogin] = useState(!!curUser)
+  const formRef = useRef<any>(null);
+  const loginAlert = useRef<any>(null)
+
+  const checkLogin = () => {
+    loginAlert.current && clearInterval(loginAlert.current)
+    loginAlert.current = setInterval(() => {
+      const showLogin = localStorage.getItem('showLogin')
+      if (showLogin) {
+        localStorage.removeItem('showLogin')
+        setIsModalVisible(true)
+        clearInterval(loginAlert.current)
+      }
+    }, 1000)
+  }
+
+  checkLogin()
 
   const showModal = () => {
-    setIsModalVisible(true);
+    if (!isLogin) {
+      setIsModalVisible(true);
+    } else {
+      Cookies.remove('tel')
+      Cookies.remove('token')
+      setIsLogin(false)
+      setLoginText('登录/注册')
+    }
   };
 
-  const appdow = ()=>{
+  const appdow = () => {
     message.info('正在开发中...');
   }
 
@@ -28,11 +53,11 @@ const UserInfo: FC = () => {
   };
 
   return <div className={styles.userInfoContainer}>
-     <span className={styles.appDow} onClick={appdow} >
+    <span className={styles.appDow} onClick={appdow} >
       下载APP
     </span>
     <span className={styles.login} onClick={showModal} >
-      登录/注册
+      {loginText}
     </span>
 
     <Modal
@@ -47,10 +72,24 @@ const UserInfo: FC = () => {
         className="login-form"
         onFinish={
           async (values) => {
-            console.log(values);
-            message.success('提交成功');
+            console.log('values', values);
+            const res = await getLogin(values)
+            console.log('🚀 ~ res', res)
+
+            if (res.code === 0 && res.success) {
+              const userInfo = res.data.user_info
+              const access_token = res.data.access_token
+              Cookies.set('tel', userInfo.mobile, { expires: 100 })
+              Cookies.set('token', access_token, { expires: 100 })
+              setLoginText(`${userInfo.mobile} | 退出`)
+              setIsModalVisible(false)
+              setIsLogin(true)
+            } else {
+              message.error(res.msg);
+            }
           }
         }
+        formRef={formRef}
       >
         <>
           <ProFormText
@@ -93,8 +132,15 @@ const UserInfo: FC = () => {
                 message: '请输入验证码！',
               },
             ]}
-            onGetCaptcha={async () => {
-              message.success('获取验证码成功！验证码为：1234');
+            onGetCaptcha={async (e) => {
+              // 发送验证码
+              const mobile = await formRef.current?.getFieldFormatValue('mobile')
+              if (/^1[3456789]\d{9}$/.test(mobile)) {
+                const res = await sendSmsCode({ mobile })
+                message.success(res.data);
+              } else {
+                message.error('请输入正确手机号');
+              }
             }}
           />
         </>

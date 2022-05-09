@@ -6,8 +6,9 @@ import styles from './index.less'
 import RaceInfoTabs from '@/components/RaceInfoTabs';
 import Layout from '@/components/layout'
 import { useLocation } from 'umi';
-
+import Cookies from 'js-cookie'
 import { getMatchInfo } from '../../api'
+
 
 // 视频设置
 const videoJsOptions = {
@@ -28,7 +29,7 @@ export type queryType = {
 
 const Live: FC = () => {
   const playerRef = useRef(null)
-
+  const loginTimer = useRef<any>(null)
   const [options, setOptions] = useState(videoJsOptions)
   const [curRaceInfo, setCurRaceInfo] = useState({})
   const location = useLocation() as unknown as { query: queryType };
@@ -53,6 +54,8 @@ const Live: FC = () => {
 
     }
     fetchData()
+
+    console.log('进入直播页')
   }, [])
 
 
@@ -66,6 +69,20 @@ const Live: FC = () => {
 
     player.on('dispose', () => {
       player.log('player will dispose');
+    });
+
+    player.on('play', () => {
+      // 如果未登录，则 60 秒后设置登录标记
+      const isLogin = !!Cookies.get('tel')
+      if (!isLogin) {
+        loginTimer.current && clearTimeout(loginTimer.current)
+        loginTimer.current = setTimeout(() => {
+          localStorage.setItem('showLogin', '1');
+        }, 60000)
+      } else {
+        localStorage.removeItem('showLogin');
+      }
+      console.log('视频开始播放了......')
     });
   };
 
