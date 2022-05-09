@@ -23,7 +23,7 @@ export async function getLogin  (data){
 }
 
 //获取获取验证码 mobile=11111
-export async function  sedSmscode (data){
+export async function  sendSmsCode (data){
 	return request.get(`${URL}/smscode`,{params: data})
 }
 

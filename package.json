@@ -21,6 +21,7 @@
     "umi-request": "^1.4.0"
   },
   "devDependencies": {
+    "@types/js-cookie": "^3.0.2",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "@types/video.js": "^7.3.39",
