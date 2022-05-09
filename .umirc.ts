@@ -6,7 +6,7 @@ export default defineConfig({
     type: 'none',
   },
   layout: {
-    name: 'logo',
+    name: '11-直播',
     locale: false,
     layout: 'topmenu',
     logo: null,
