@@ -11,8 +11,6 @@ export async function  getMatchLive(data){
 	return  request.get(`${URL}/match/getHomeList`,{params: data})
 }
 
-
-
 // 登陆 mobile=111&captcha=1
 // export const getLogin = (data) =>{
 // 	return  http.get(`/member/login`,{params: data,custom})
@@ -23,7 +21,7 @@ export async function getLogin  (data){
 }
 
 //获取获取验证码 mobile=11111
-export async function  sendSmsCode (data){
+export async function  sedSmscode (data){
 	return request.get(`${URL}/smscode`,{params: data})
 }
 
@@ -32,3 +30,8 @@ export async function  sendSmsCode (data){
 export  async function  getMatchInfo (data){
 	return  request.get(`${URL}/match/getMatchInfo`,{params: data})
 }
+
+// 获取赛程 sport_id=2  1  足球  2 篮球
+export  async function getMatchSchedule(data){
+	return  request.get(`${URL}/match/getMatchSchedule`,{params: data})
+} 
