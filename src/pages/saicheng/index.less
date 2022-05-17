@@ -9,28 +9,39 @@
     background-color: #fff;
     margin-bottom: 5px;
     padding: 10px 20px 20px; 
+    box-shadow: 1.4px 0px 10px rgba(0, 0, 0, 0.025);
+    flex-direction: column;
+    cursor: pointer;
+    position: relative;
+    top: 0;
+    transition: all .3s;
 
-    box-shadow: 1.4px 0px 10px rgba(0, 0, 0, 0.025),
-  11px 0px 80px rgba(0, 0, 0, 0.05)
-;
+    &:hover{
+        top: -5px;
+    }
 
     .name{
         font-size: 22px;
         color: #333852;
+        width: 100%;
     }
     .contetn{
         display: flex;
         justify-content: space-between;
         align-items: center;
+        width: 100%;
     }
 
     .team_info{
         display: flex;
         align-items: center;
+        width: 70%;
     }
     .l_team_box{
         display: flex;
         align-items: center;
+        width: 40%;
+        justify-content:flex-end;
         img{
             height: 60px;
             margin: 0 40px 0 20px;
@@ -48,6 +59,7 @@
     .r_team_box{
         display: flex;
         align-items: center;
+
         img{
             height: 60px;
             margin: 0 20px 0 40px;

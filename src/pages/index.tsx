@@ -24,6 +24,7 @@ const IndexPage = () => {
 
   useEffect(() => {
     getList(typeId)
+    console.log('vision--1.0.0')
   }, [typeId]);
 
   const _type: any = {
@@ -53,7 +54,7 @@ const IndexPage = () => {
           <h1>{_type[typeId]}</h1>
           <Spin spinning={loding} indicator={antIcon} >
           {
-             liveList.length > 0 ? <GameLiveItem liveList={liveList} /> : <Empty />
+            liveList.length > 0 ? <GameLiveItem liveList={liveList} /> : <Empty />
           }
           </Spin>
         </div>
