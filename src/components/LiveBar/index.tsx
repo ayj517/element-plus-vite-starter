@@ -18,7 +18,6 @@ const statusMap: any = {
 
 const LiveBar: FC = (props: any) => {
   const { raceInfo } = props
-  console.log('🚀 ~ raceInfo', raceInfo)
   const {
     home_name, home_logo, home_score,
     away_name, away_logo, away_score,
@@ -27,7 +26,6 @@ const LiveBar: FC = (props: any) => {
     stages_name = '',
     match_time
   } = raceInfo
-  console.log('🚀 ~ match_time', match_time)
 
   const gameTime = dayjs(match_time * 1000).format('MM月DD日 HH:mm')
 

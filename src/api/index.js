@@ -7,7 +7,6 @@ const URL = 'https://api.11zb.com/api'
 //     menu_id:id
 // }
 export async function  getMatchLive(data){
-    console.log(data)
 	return  request.get(`${URL}/match/getHomeList`,{params: data})
 }
 

@@ -3,7 +3,7 @@ import GameLiveItem from '@/components/gameLive/GameLiveItem'
 import Layout from '@/components/layout/index'
 import { useState, useEffect } from 'react';
 import { getMatchLive } from '@/api/index'
-import { Empty, Spin } from 'antd';
+import { Empty, Spin ,Alert} from 'antd';
 import { useLocation } from 'umi';
 import { LoadingOutlined } from '@ant-design/icons';
 
@@ -50,6 +50,8 @@ const IndexPage = () => {
   return (
     <div>
       <Layout>
+      {/* <Alert message="因第三方网络波动问题影响，目前直播无法正常播放，我们正在积极处理中，请稍后重试" type="error" /> */}
+
         <div className={styles.liveList}>
           <h1>{_type[typeId]}</h1>
           <Spin spinning={loding} indicator={antIcon} >

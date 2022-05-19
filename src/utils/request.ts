@@ -46,7 +46,6 @@ function aes_decrypt(ciphertext:any) {
   */
  const errorHandler = (error: { response: Response }): Response => {
    const { response } = error;
-   console.log(response,'response')
    if (response && response.status) {
      const errorText = codeMessage[response.status] || response.statusText;
      const { status, url } = response;
@@ -98,7 +97,6 @@ function aes_decrypt(ciphertext:any) {
 
  request.interceptors.response.use(async response => {
   const _data = JSON.parse(aes_decrypt(await response.text()));
-  console.log(_data,'_data')
   return _data;
  });
 

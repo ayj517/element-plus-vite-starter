@@ -36,26 +36,41 @@ const Live: FC = () => {
   const query = location.query;
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchData = async (type?:String) => {
       const params: queryType = {
         match_id: query.match_id,
         sport_id: query.sport_id,
         ff_match_id: query.ff_match_id
       }
+
       const res = await getMatchInfo(params)
-      console.log('🚀 ~ fetchData ~ res', res)
       const itemData = res.data
+      // itemData.away_score = Math.ceil(Math.random()*10)
+      // console.log(itemData)
+      // console.log('获取比分')
       setCurRaceInfo(itemData)
-      setOptions({
-        ...options,
-        poster: itemData.screenshot_url,
-        sources: itemData.player_url
-      })
+      if(!type){
+        setOptions({
+          ...options,
+          poster: itemData.screenshot_url,
+          sources: itemData.player_url
+        })
+      }
 
     }
+
+    const timer =  setInterval(() => {
+      if(curRaceInfo.match_status !=2 ){
+        clearInterval(timer)
+      }else{
+        fetchData('ff')
+      }
+    }, 60000);
+
     fetchData()
 
-    console.log('进入直播页')
+    return ()=> clearInterval(timer)
+
   }, [])
 
 

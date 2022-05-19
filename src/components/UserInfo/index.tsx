@@ -72,10 +72,7 @@ const UserInfo: FC = () => {
         className="login-form"
         onFinish={
           async (values) => {
-            console.log('values', values);
             const res = await getLogin(values)
-            console.log('🚀 ~ res', res)
-
             if (res.code === 0 && res.success) {
               const userInfo = res.data.user_info
               const access_token = res.data.access_token
