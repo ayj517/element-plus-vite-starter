@@ -69,6 +69,8 @@ const Live: FC = () => {
 
     fetchData()
 
+
+    
     return ()=> clearInterval(timer)
 
   }, [])
