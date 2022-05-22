@@ -70,7 +70,7 @@ const Live: FC = () => {
     fetchData()
 
 
-    
+
     return ()=> clearInterval(timer)
 
   }, [])
@@ -110,7 +110,7 @@ const Live: FC = () => {
         raceInfo={curRaceInfo}
       />
       <div className={styles.videoContainer}>
-        {options.poster && <VideoJS options={options} onReady={handlePlayerReady} />}
+        <VideoJS options={options} onReady={handlePlayerReady} />
       </div>
       <RaceInfoTabs />
     </div>

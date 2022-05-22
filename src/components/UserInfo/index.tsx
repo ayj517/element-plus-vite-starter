@@ -4,14 +4,21 @@ import * as Cookies from 'js-cookie';
 import { Modal, Button, Form, message } from 'antd';
 
 import { LoginForm, ProFormText, ProFormCaptcha, ProFormInstance } from '@ant-design/pro-form';
-import { MobileOutlined, LockOutlined, } from '@ant-design/icons';
-import { sendSmsCode, getLogin } from '@/api'
+import { MobileOutlined, LockOutlined, CustomerServiceOutlined } from '@ant-design/icons';
+import { sendSmsCode, getLogin, getAppHost } from '@/api'
+import logo from '@/static/logo.jpg'
+
+import QRCode from 'qrcode.react';
 
 const UserInfo: FC = () => {
   const curUser = Cookies.get('tel')
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [loginText, setLoginText] = useState(curUser ? `${curUser} | 退出` : '登录/注册')
   const [isLogin, setIsLogin] = useState(!!curUser)
+  const [kfInfo, setKfInfo] = useState({
+    kfImg: 'https://oss.11zb.com/app/kf11zb.jpeg',
+    kfId: "kf11zb"
+  })
   const formRef = useRef<any>(null);
   const loginAlert = useRef<any>(null)
 
@@ -40,9 +47,9 @@ const UserInfo: FC = () => {
     }
   };
 
-  const appdow = () => {
-    message.info('正在开发中...');
-  }
+  // const appdow = () => {
+  //   message.info('正在开发中...');
+  // }
 
   const handleOk = () => {
     setIsModalVisible(false);
@@ -52,13 +59,51 @@ const UserInfo: FC = () => {
     setIsModalVisible(false);
   };
 
+  useEffect(() => {
+    const fetchKF = async () => {
+      const res = await getAppHost()
+      const kfImg = res.data.kf_qr_code
+      const kfId = res.data.kf_wx_id
+      setKfInfo({ kfImg, kfId })
+    }
+    fetchKF()
+  }, [])
+
   return <div className={styles.userInfoContainer}>
-    <span className={styles.appDow} onClick={appdow} >
-      下载APP
-    </span>
-    <span className={styles.login} onClick={showModal} >
-      {loginText}
-    </span>
+    <div className={styles.right_box}>
+      <span className={styles.appDow} >
+        <CustomerServiceOutlined style={{ fontSize: '16px', color: '#08c', paddingRight: '5px' }} />
+        联系客服
+        <div className={styles.code_er}>
+          <img src={kfInfo.kfImg} />
+          <p style={{ fontSize: '16px' }}>扫码联系客服: {kfInfo.kfId}</p>
+        </div>
+      </span>
+      <span className={styles.appDow} >
+        <MobileOutlined style={{ fontSize: '16px', color: '#08c', paddingRight: '5px' }} />
+        下载APP
+        <div className={styles.code_er}>
+          <QRCode
+            id="qrCode"
+            value="https://www.jianshu.com/u/992656e8a8a6"
+            size={200} // 二维码的大小
+            fgColor="#000000" // 二维码的颜色
+            style={{ margin: 'auto' }}
+            imageSettings={{ // 二维码中间的logo图片
+              src: logo,
+              height: 40,
+              width: 40,
+              excavate: true, // 中间图片所在的位置是否镂空
+            }}
+          />
+          <p>APP下载</p>
+        </div>
+      </span>
+      <span className={styles.login} onClick={showModal} >
+        {loginText}
+      </span>
+    </div>
+
 
     <Modal
       className='login-modal'

@@ -104,7 +104,7 @@ const InfiniteListExample = () => {
                 <List.Item key={item.id} className={styles.item} onClick={() => handleClick(item)}>
                         <div className={styles.name}>{item.sport_id==1?'足球':'篮球'}-{item.alias_name}</div>
                         <div className={styles.contetn}>
-                        <div className={styles.tiem}>{dayjs(item.match_date).format('YYYY-MM-DD HH:mm')}</div>
+                        <div className={styles.tiem}>{dayjs(item.match_time*1000).format('YYYY-MM-DD HH:mm')}</div>
                         <div className={styles.team_info}>
                             <div className={styles.l_team_box}>
                             <span className={styles.team_name}>{item.home_name}</span>
